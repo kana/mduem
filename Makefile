@@ -185,7 +185,7 @@ vim_script_deps := $(if $(vim_script_repos_p),vim-vspec vimup,)
 all_deps := $(vim_script_deps) $(DEPS)
 
 DEP_vim_vspec_URI ?= ../vim-vspec
-DEP_vim_vspec_VERSION ?= 0.0.3
+DEP_vim_vspec_VERSION ?= 1.0.0
 
 DEP_vimup_URI ?= ../vimup
 DEP_vimup_VERSION ?= 0.0.1
@@ -362,65 +362,16 @@ $(repos_name).vimup: $(firstword $(sort $(filter doc/%.txt, \
 
 # test  #{{{1
 
-test_cases := $(patsubst test/%.expected,%, \
-                $(filter test/%.expected,$(all_files_in_repos)))
-
-
-default_test_rule_deps := $(MAKEFILE_LIST)
-define default_test_rule
-	source './$<' &>'$@' || { cat '$@'; false; }
-endef
-
-ifneq '$(vim_script_repos_p)' ''
-all_vim_scripts := $(filter %.vim,$(all_files_in_repos))
-vim_script_test_rule_deps := .mduem/deps/vim-vspec/bin/vspec $(all_vim_scripts)
-define vim_script_test_rule
-	./$(call get_dep_dir,vim-vspec)/bin/vspec \
-	  $< \
-	  "$$PWD" \
-	  $(foreach d,$(all_deps),$(call get_dep_dir,$(d))) \
-	  &>$@
-endef
-endif
-
-TEST_RULE ?= $(if $(vim_script_repos_p), \
-               $(vim_script_test_rule), \
-               $(default_test_rule))
-TEST_RULE_DEPS ?=# Empty
-
-builtin_test_rule_deps := $(if $(vim_script_repos_p), \
-                            $(vim_script_test_rule_deps), \
-                            $(default_test_rule_deps))
-all_test_rule_deps := $(builtin_test_rule_deps) $(TEST_RULE_DEPS)
-
-
-
-
 .PHONY: test
-test: fetch-deps test/,ok
-
-test/,ok: $(test_cases:%=test/,%.ok)
-	@echo 'ALL TESTS ARE PASSED.'
-	@touch $@
-
-test/,%.ok: test/%.input $(all_test_rule_deps)
-	@echo -n 'TEST $* ... '
-	@$(MAKE) --silent '$(@:.ok=.diff)'
-	@if ! [ -s $(@:.ok=.diff) ]; then \
-	   echo 'OK'; \
-	 else \
-	   echo 'FAILED'; \
-	   cat $(@:.ok=.diff); \
-	   echo 'END'; \
-	   false; \
-	 fi
-	@touch $@
-
-test/,%.diff: test/%.expected test/,%.output
-	@diff -u $^ >$@; true
-
-test/,%.output: test/%.input $(all_test_rule_deps)
-	@$(TEST_RULE)
+test: fetch-deps
+	@prove --comments --failure --ext '.t'
+ifneq '$(vim_script_repos_p)' ''
+	@prove --comments --failure --ext '.vim' \
+	  --exec './$(call get_dep_dir,vim-vspec)/bin/vspec \
+	          $(PWD) \
+		  $(foreach d,$(all_deps),$(call get_dep_dir,$(d)))'
+endif
+	@touch "$@"
 
 
 
