@@ -11,16 +11,19 @@ Requirements:
 	GNU make 3.81 or later <http://www.gnu.org/software/make/>
 	git 1.7.0 or later <http://git-scm.com/>
 	Zip 2.32 or later <http://www.info-zip.org/>
+	Perl 5.8.8 or later <http://www.perl.org/>
+	TAP::Harness v3.23 or later
+		<http://search.cpan.org/~andya/Test-Harness-3.23/>
 
 	For Vim script development (automatically downloaded):
-	vim-vspec 0.0.3a1 or later <http://github.com/kana/vim-vspec>
+	vim-vspec 1.0.0 or later <http://github.com/kana/vim-vspec>
 	vimup 0.0.0a1 or later <http://github.com/kana/vimup>
 
 Public repository:
 	http://github.com/kana/mduem
 
 License:
-	Copyright (C) 2010 kana <http://whileimautomaton.net/>
+	Copyright (C) 2012 Kana Natsuno <http://whileimautomaton.net/>
 
 	Permission is hereby granted, free of charge, to any person
 	obtaining a copy of this software and associated documentation

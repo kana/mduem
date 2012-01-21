@@ -102,29 +102,14 @@ TARGETS_STATIC := autoload/smartchr.vim doc/smartchr.txt
 # $ make test
 # to test.
 #
-# Each test case consists of two files - {case}.input and {case}.expected.
-# These files are put in "test" directory.  $(TEST_RULE) is executed and its
-# output is compared to the content of {case}.expected.  If there is no
-# difference between the files, test {case} is passed.  Otherwise it is
-# failed.
+# Each test case is an executable file which outputs its result in Test
+# Anything Protocol.  See also http://testanything.org/ for the details of the
+# output format.
 
-# By default, {case}.input is treated as a shell script and it is source'd to
-# get output.  If the current repository is for Vim script, vim-vspec is used
-# instead.
+# By default, t/*.t are treated as test cases and will be executed.
 #
-# To customize $(TEST_RULE), write like the following:
-#
-# define TEST_RULE
-#         # $< = {case}.input
-#         # $@ = a temporary file to store output
-#         source './$<' &>'$@' || { cat '$@'; false; }
-# endef
-#
-# If there are additional dependencies for $(TEST_RULE), list them in
-# $(TEST_RULE_DEPS).  For example, all tests for a Vim script are dependent on
-# *.vim files in the current repository.  To denote this, write as follows:
-#
-# TEST_RULE_DEPS = $(filter %.vim,$(all_files_in_repos))
+# If the current repository is for Vim script, t/*.vim are also treated as
+# test cases.  These files will be executed with vim-vspec.
 
 # A project (= superproject) usually depends on some projects (= subprojects).
 # It's necessary to set up the subprojects to test the superproject.  If there
