@@ -185,7 +185,7 @@ vim_script_deps := $(if $(vim_script_repos_p),vim-vspec vimup,)
 all_deps := $(vim_script_deps) $(DEPS)
 
 DEP_vim_vspec_URI ?= ../vim-vspec
-DEP_vim_vspec_VERSION ?= 1.0.0
+DEP_vim_vspec_VERSION ?= 1.0.2
 
 DEP_vimup_URI ?= ../vimup
 DEP_vimup_VERSION ?= 0.0.1
