@@ -371,7 +371,6 @@ ifneq '$(vim_script_repos_p)' ''
 	          $(PWD) \
 		  $(foreach d,$(all_deps),$(call get_dep_dir,$(d)))'
 endif
-	@touch "$@"
 
 
 
