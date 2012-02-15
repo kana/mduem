@@ -362,7 +362,7 @@ $(repos_name).vimup: $(firstword $(sort $(filter doc/%.txt, \
 
 # test  #{{{1
 
-PROVE_OPTIONS ?= --comments --failure
+PROVE_OPTIONS ?= --comments --failure --directives
 
 .PHONY: test
 test: fetch-deps
