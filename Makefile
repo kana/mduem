@@ -362,11 +362,17 @@ $(repos_name).vimup: $(firstword $(sort $(filter doc/%.txt, \
 
 # test  #{{{1
 
+PROVE_OPTIONS ?= --comments --failure
+
 .PHONY: test
 test: fetch-deps
-	@prove --comments --failure --ext '.t'
+	@prove \
+	  --ext '.t' \
+	  $(PROVE_OPTIONS)
 ifneq '$(vim_script_repos_p)' ''
-	@prove --comments --failure --ext '.vim' \
+	@prove \
+	  --ext '.vim' \
+	  $(PROVE_OPTIONS) \
 	  --exec './$(call get_dep_dir,vim-vspec)/bin/vspec \
 	          $(PWD) \
 		  $(foreach d,$(all_deps),$(call get_dep_dir,$(d)))'
