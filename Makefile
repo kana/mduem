@@ -362,16 +362,34 @@ $(repos_name).vimup: $(firstword $(sort $(filter doc/%.txt, \
 
 # test  #{{{1
 
+PROVE_OPTIONS ?= --comments --failure --directives
+TEST_TARGETS ?=# Empty
+test_t_targets := $(filter %.t,$(TEST_TARGETS))
+test_vim_targets := $(filter %.vim,$(TEST_TARGETS))
+
 .PHONY: test
 test: fetch-deps
-	@prove --comments --failure --ext '.t'
+	@if [ -z '$(TEST_TARGETS)' ] || [ -n '$(test_t_targets)' ]; then \
+	   prove \
+	     --ext '.t' \
+	     $(PROVE_OPTIONS) \
+	     $(test_t_targets); \
+	 else \
+	   true; \
+	 fi
 ifneq '$(vim_script_repos_p)' ''
-	@prove --comments --failure --ext '.vim' \
-	  --exec './$(call get_dep_dir,vim-vspec)/bin/vspec \
-	          $(PWD) \
-		  $(foreach d,$(all_deps),$(call get_dep_dir,$(d)))'
+	@if [ -z '$(TEST_TARGETS)' ] || [ -n '$(test_vim_targets)' ]; then \
+	   prove \
+	     --ext '.vim' \
+	     $(PROVE_OPTIONS) \
+	     --exec './$(call get_dep_dir,vim-vspec)/bin/vspec \
+	             $(PWD) \
+	             $(foreach d,$(all_deps),$(call get_dep_dir,$(d)))' \
+	     $(test_vim_targets); \
+	 else \
+	   true; \
+	 fi
 endif
-	@touch "$@"
 
 
 
