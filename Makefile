@@ -285,7 +285,7 @@ ifneq '$(vim_script_repos_p)' ''
 target_vim_helptags := $(call RENAME_TARGET,doc/tags)
 $(target_vim_helptags): $(filter doc/%.txt,$(targets_all_installed))
 	@echo 'POST-INSTALL vim helptags'
-	@vim -n -N -u NONE -U NONE -e -c 'helptags $(dir $@) | qall!'
+	@vim -n -N -u NONE -U NONE -i NONE -e -c 'helptags $(dir $@) | qall!'
 
 targets_post_install_builtin += $(target_vim_helptags)
 endif
