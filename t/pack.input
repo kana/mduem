@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dir="$PWD/test/,pack"
+dir="$PWD/t/,pack"
 makefile="$dir/Makefile"
 
 mkdir -p "$dir"

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dir='test/,install-renaming'
+dir='t/,install-renaming'
 
 make --always-make >/dev/null \
   "INSTALLATION_DIR=$dir" \

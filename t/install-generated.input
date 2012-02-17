@@ -1,8 +1,8 @@
 #!/bin/bash
 
-dir='test/,install-generated'
-makefile='test/,install-generated.Makefile'
-file='test/,install-generated.foo'
+dir='t/,install-generated'
+makefile='t/,install-generated.Makefile'
+file='t/,install-generated.foo'
 
 cat >"$makefile" <<END
 TARGETS_GENERATED := $file
