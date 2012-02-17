@@ -1,7 +1,7 @@
 #!/bin/bash
 # FIXME: Add tests for DEP_{project}_URI with a relative URI.
 
-dir="$PWD/test/,fetch-deps"
+dir="$PWD/t/,fetch-deps"
 makefile="$dir/Makefile"
 cache=".mduem/cache/Makefile.variables"
 

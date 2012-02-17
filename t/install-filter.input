@@ -1,8 +1,8 @@
 #!/bin/bash
 
-dir='test/,install-filter'
-file_asis="test/,install-filter.asis"
-file_filtered="test/,install-filter.filtered"
+dir='t/,install-filter'
+file_asis="t/,install-filter.asis"
+file_filtered="t/,install-filter.filtered"
 
 echo '@@VERSION@@' >"$file_asis"
 chmod 700 "$file_asis"

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-dir='test/,default-target'
-makefile='test/,default-target.Makefile'
-file_source='test/,default-target.source'
-file_generated='test/,default-target.generated'
+dir='t/,default-target'
+makefile='t/,default-target.Makefile'
+file_source='t/,default-target.source'
+file_generated='t/,default-target.generated'
 
 echo "$$" >"$file_source"
 cat >"$makefile" <<END
@@ -19,8 +19,9 @@ $file_generated: $file_source
 include Makefile
 END
 
-make --always-make -f "$makefile" >/dev/null \
-  "INSTALLATION_DIR=$dir"
+make --always-make -f "$makefile" 2>&1 >/dev/null \
+  "INSTALLATION_DIR=$dir" |
+  sed 's/^Makefile:[0-9]*:/Makefile:%l:/'
 
 diff "$file_source" "$file_generated" >/dev/null; echo "same $?"
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dir='test/,clean-generated'
+dir='t/,clean-generated'
 generated_file="$dir/generated-file"
 static_file="$dir/static-file"
 

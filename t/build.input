@@ -1,9 +1,9 @@
 #!/bin/bash
 
-dir='test/,all'
-makefile='test/,all.Makefile'
-file_source='test/,all.source'
-file_generated='test/,all.generated'
+dir='t/,build'
+makefile='t/,build.Makefile'
+file_source='t/,build.source'
+file_generated='t/,build.generated'
 
 echo "$$" >"$file_source"
 cat >"$makefile" <<END
