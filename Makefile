@@ -366,6 +366,8 @@ PROVE_OPTIONS ?= --comments --failure --directives
 TEST_TARGETS ?=# Empty
 test_t_targets := $(filter %.t,$(TEST_TARGETS))
 test_vim_targets := $(filter %.vim,$(TEST_TARGETS))
+vspec := ./$(call get_dep_dir,vim-vspec)/bin/vspec
+all_dep_dirs := $(foreach d,$(all_deps),$(call get_dep_dir,$(d)))
 
 .PHONY: test
 test: fetch-deps
@@ -382,9 +384,7 @@ ifneq '$(vim_script_repos_p)' ''
 	   prove \
 	     --ext '.vim' \
 	     $(PROVE_OPTIONS) \
-	     --exec './$(call get_dep_dir,vim-vspec)/bin/vspec \
-	             $(PWD) \
-	             $(foreach d,$(all_deps),$(call get_dep_dir,$(d)))' \
+	     --exec '$(vspec) $(PWD) $(all_dep_dirs)' \
 	     $(test_vim_targets); \
 	 else \
 	   true; \
